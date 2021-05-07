@@ -17,10 +17,11 @@ class Card {
     }
 }
 
+const GuessedBackgroundColor = 'red'
 const FIELD = [];
-const DIMENSION = 2;
+const DIMENSION = 4;
 let SCORE = 0;
-let OpenedCards = DIMENSION ** 2;
+let GuessedCards = DIMENSION ** 2;
 let lastOpenedCard = null;
 
 renderGrid(DIMENSION);
@@ -42,8 +43,10 @@ function startGame(dimension) {
 
 
 function renderGrid (dimension) {
-    OpenedCards = dimension ** 2;
     SCORE = 0;
+    document.getElementById('score').innerText = `ТВОИ ОЧКИ: ${SCORE}`;
+    document.getElementById('description').innerText = `Найди карточки, дающие в сумме ${(DIMENSION + 1) * 11}`
+    GuessedCards = dimension ** 2;
     const container = document.getElementById('fieldWrapper');
     container.innerHTML = '';
 
@@ -60,25 +63,37 @@ function renderGrid (dimension) {
 }
 
 
+function CloseExtraOpenedCards() {
+    let allCards = Object.values(document.getElementsByTagName('td'));
+    let openedCards = allCards.filter(function(card) {return card.style.backgroundColor !== GuessedBackgroundColor && card.style.color !== 'transparent'});
+    if (openedCards.length > 1) {
+        openedCards.forEach(function(card) {return card.style.color = 'transparent'});
+    }
+}
+
+
 function cardClickHandler(targetCard) {
     console.log('click!');
+    CloseExtraOpenedCards();
     targetCard.style.color = 'black';
     if (lastOpenedCard === null) {
         lastOpenedCard = targetCard;
     }
     else {
         if (Number(targetCard.textContent) + Number(lastOpenedCard.textContent) === (DIMENSION + 1) * 11) {
-            targetCard.style.backgroundColor = 'red';
-            lastOpenedCard.style.backgroundColor = 'red';
+            targetCard.style.backgroundColor = GuessedBackgroundColor;
+            lastOpenedCard.style.backgroundColor = GuessedBackgroundColor;
             SCORE += DIMENSION;
-            OpenedCards -= 2;
-            if (OpenedCards === 0) {
-                alert(`You win! Score: ${SCORE}`)
+            GuessedCards -= 2;
+            if (GuessedCards === 0) {
+                alert(`You win! Score: ${SCORE}`);
             }
         }
         else {
             const secondCard = lastOpenedCard;
-            SCORE -= 1;
+            if (SCORE > 0) {
+                SCORE -= 1;
+            }
             setTimeout(
                 () => {
                     targetCard.style.color = 'transparent';
@@ -86,6 +101,7 @@ function cardClickHandler(targetCard) {
                     // TODO: заблокировать клики, пока не закроются карты ИЛИ закрывать карты сразу по клику
                 }, 1500);
         }
+        document.getElementById('score').innerText = `ТВОИ ОЧКИ: ${SCORE}`;
         lastOpenedCard = null;
     }
 }

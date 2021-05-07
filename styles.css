@@ -19,3 +19,9 @@ td {
     margin: 20px auto;
     font-size: 16px;
 }
+
+.labelScore {
+    display: block;
+    text-align: center;
+    font-size: 20px;
+}
