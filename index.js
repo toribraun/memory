@@ -1,3 +1,7 @@
+// import * as path from "path";
+// import fs from "fs";
+
+
 class Card {
     constructor(row, column) {
         this.row = row;
@@ -19,6 +23,8 @@ class Card {
 
 const GuessedBackgroundColor = 'red'
 const FIELD = [];
+const IMAGES = ['black.png', 'blue.png', 'gray.png', 'mint.png', 'orange.png', 'pink.png',
+    'purple.png', 'red.png', 'vinous.png', 'white.png', 'yellow.png'];
 const DIMENSION = 4;
 let SCORE = 0;
 let GuessedCards = DIMENSION ** 2;
@@ -41,6 +47,36 @@ function startGame(dimension) {
     console.log(FIELD)
 }
 
+// function getFiles (dir, files_){
+//     files_ = files_ || [];
+//     let files = fs.readdirSync(dir);
+//     for (const i in files) {
+//         const name = dir + '/' + files[i];
+//         if (fs.statSync(name).isDirectory()){
+//             getFiles(name, files_);
+//         } else {
+//             files_.push(name);
+//         }
+//     }
+//     return files_;
+// }
+//
+// console.log(path.join(process.cwd(), "/images"));
+// console.log(getFiles(path.join(process.cwd(), "/images")));
+
+function shuffle(array) {
+    let currentIndex = array.length,  randomIndex;
+
+    while (0 !== currentIndex) {
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex--;
+        [array[currentIndex], array[randomIndex]] = [
+            array[randomIndex], array[currentIndex]];
+    }
+
+    return array;
+}
+
 
 function renderGrid (dimension) {
     SCORE = 0;
@@ -50,11 +86,27 @@ function renderGrid (dimension) {
     const container = document.getElementById('fieldWrapper');
     container.innerHTML = '';
 
+    // let items = [];
+    // for (let i = 0; i < dimension; i++) {
+    //     for (let j = 0; j < dimension; j++) {
+    //         items.push(`${(i + 1) * 10 + j + 1}`);
+    //     }
+    // }
+
+    let items = shuffle(IMAGES).slice(0, dimension ** 2 / 2);
+    items = shuffle(items.concat(items))
+    const res_items = [];
+    for (let i = 0; i < dimension ** 2; i += dimension) {
+        res_items.push(items.slice(i, i + dimension));
+    }
+
     for (let i = 0; i < dimension; i++) {
         const row = document.createElement('tr');
         for (let j = 0; j < dimension; j++) {
             const cell = document.createElement('td');
-            cell.textContent = `${(i + 1) * 10 + j + 1}`;
+            cell.textContent = res_items[i][j];
+            // cell.style.backgroundImage = `url('${'images/' + res_items[i][j]}')`;
+            console.log(res_items[i][j]);
             cell.addEventListener('click', () => cardClickHandler(cell));
             row.appendChild(cell);
         }
@@ -65,9 +117,10 @@ function renderGrid (dimension) {
 
 function CloseExtraOpenedCards() {
     let allCards = Object.values(document.getElementsByTagName('td'));
-    let openedCards = allCards.filter(function(card) {return card.style.backgroundColor !== GuessedBackgroundColor && card.style.color !== 'transparent'});
+    let openedCards = allCards.filter(function(card) {
+        return card.style.backgroundColor !== GuessedBackgroundColor && card.style.backgroundImage !== 'none'});
     if (openedCards.length > 1) {
-        openedCards.forEach(function(card) {return card.style.color = 'transparent'});
+        openedCards.forEach(function(card) {return card.style.backgroundImage = 'none'});
     }
 }
 
@@ -75,12 +128,14 @@ function CloseExtraOpenedCards() {
 function cardClickHandler(targetCard) {
     console.log('click!');
     CloseExtraOpenedCards();
-    targetCard.style.color = 'black';
+    targetCard.style.backgroundImage = `url(${'images/' + targetCard.textContent})`
+    // targetCard.style.color = 'black';
     if (lastOpenedCard === null) {
         lastOpenedCard = targetCard;
     }
     else {
-        if (Number(targetCard.textContent) + Number(lastOpenedCard.textContent) === (DIMENSION + 1) * 11) {
+        if (targetCard.textContent === lastOpenedCard.textContent) {
+        // if (Number(targetCard.textContent) + Number(lastOpenedCard.textContent) === (DIMENSION + 1) * 11) {
             targetCard.style.backgroundColor = GuessedBackgroundColor;
             lastOpenedCard.style.backgroundColor = GuessedBackgroundColor;
             SCORE += DIMENSION;
@@ -96,9 +151,8 @@ function cardClickHandler(targetCard) {
             }
             setTimeout(
                 () => {
-                    targetCard.style.color = 'transparent';
-                    secondCard.style.color = 'transparent';
-                    // TODO: заблокировать клики, пока не закроются карты ИЛИ закрывать карты сразу по клику
+                    targetCard.style.backgroundImage = 'none';
+                    secondCard.style.backgroundImage = 'none';
                 }, 1500);
         }
         document.getElementById('score').innerText = `ТВОИ ОЧКИ: ${SCORE}`;

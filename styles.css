@@ -9,6 +9,7 @@ header {
 td {
     width: 100px;
     height: 100px;
+    background-size: 100px;
     background-color: indianred;
     text-align: center;
     color: transparent;
