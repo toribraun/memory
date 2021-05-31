@@ -73,7 +73,6 @@ function shuffle(array) {
         [array[currentIndex], array[randomIndex]] = [
             array[randomIndex], array[currentIndex]];
     }
-
     return array;
 }
 
@@ -81,7 +80,7 @@ function shuffle(array) {
 function renderGrid (dimension) {
     SCORE = 0;
     document.getElementById('score').innerText = `ТВОИ ОЧКИ: ${SCORE}`;
-    document.getElementById('description').innerText = `Найди карточки, дающие в сумме ${(DIMENSION + 1) * 11}`
+    // document.getElementById('description').innerText = `Найди карточки, дающие в сумме ${(DIMENSION + 1) * 11}`
     GuessedCards = dimension ** 2;
     const container = document.getElementById('fieldWrapper');
     container.innerHTML = '';
@@ -105,7 +104,6 @@ function renderGrid (dimension) {
         for (let j = 0; j < dimension; j++) {
             const cell = document.createElement('td');
             cell.textContent = res_items[i][j];
-            // cell.style.backgroundImage = `url('${'images/' + res_items[i][j]}')`;
             console.log(res_items[i][j]);
             cell.addEventListener('click', () => cardClickHandler(cell));
             row.appendChild(cell);
@@ -129,13 +127,11 @@ function cardClickHandler(targetCard) {
     console.log('click!');
     CloseExtraOpenedCards();
     targetCard.style.backgroundImage = `url(${'images/' + targetCard.textContent})`
-    // targetCard.style.color = 'black';
     if (lastOpenedCard === null) {
         lastOpenedCard = targetCard;
     }
     else {
         if (targetCard.textContent === lastOpenedCard.textContent) {
-        // if (Number(targetCard.textContent) + Number(lastOpenedCard.textContent) === (DIMENSION + 1) * 11) {
             targetCard.style.backgroundColor = GuessedBackgroundColor;
             lastOpenedCard.style.backgroundColor = GuessedBackgroundColor;
             SCORE += DIMENSION;
