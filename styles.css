@@ -1,3 +1,46 @@
+#gameScreen {
+    /*visibility: visible;*/
+    display: none;
+}
+
+.levelButtons {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+.levelButtons li {
+    width: 270px;
+    margin: 10px auto;
+    font-size: 30px;
+    text-decoration: none;
+    text-align: center;
+}
+
+.levelButtons li:hover {
+    cursor: auto;
+    background-color: darkgrey;
+}
+
+.mainMenuButtons {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+.mainMenuButtons li {
+    width: 270px;
+    margin: 10px auto;
+    font-size: 30px;
+    text-decoration: none;
+    text-align: center;
+}
+
+.mainMenuButtons li:hover {
+    cursor: auto;
+    background-color: darkgrey;
+}
+
 header {
     text-align: center;
 }

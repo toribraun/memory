@@ -1,50 +1,47 @@
 // import * as path from "path";
 // import fs from "fs";
 
+const EasyLevelButton = document.getElementById('easyLevel');
+const MediumLevelButton = document.getElementById('mediumLevel');
+const HardLevelButton = document.getElementById('hardLevel');
 
-class Card {
-    constructor(row, column) {
-        this.row = row;
-        this.column = column;
-        // this.image = image;
-        this.isOpen = false;
-    }
+if (EasyLevelButton) {
+    EasyLevelButton.addEventListener('click', function () {
+        document.getElementsByClassName('levelMenu')[0].hidden = true;
+        document.getElementById('gameScreen').style.display = 'block';
+        startGame(4, 5);
+    })
+}
 
-    open() {
-        this.isOpen = true;
-        // как-то отображаем
-    }
+if (MediumLevelButton) {
+    MediumLevelButton.addEventListener('click', function () {
+        document.getElementsByClassName('levelMenu')[0].hidden = true;
+        document.getElementById('gameScreen').style.display = 'block';
+        startGame(5, 6);
+    })
+}
 
-    close() {
-        this.isOpen = false;
-        // как-то отображаем
-    }
+if (HardLevelButton) {
+    HardLevelButton.addEventListener('click', function () {
+        document.getElementsByClassName('levelMenu')[0].hidden = true;
+        document.getElementById('gameScreen').style.display = 'block';
+        startGame(6, 6);
+    })
 }
 
 const GuessedBackgroundColor = 'red'
-const FIELD = [];
 const IMAGES = ['black.png', 'blue.png', 'gray.png', 'mint.png', 'orange.png', 'pink.png',
     'purple.png', 'red.png', 'vinous.png', 'white.png', 'yellow.png'];
-const DIMENSION = 4;
 let SCORE = 0;
-let GuessedCards = DIMENSION ** 2;
+let GuessedCards;
 let lastOpenedCard = null;
 
-renderGrid(DIMENSION);
-addResetListener();
 
-function startGame(dimension) {
-    for (let i = 0; i < dimension; i++) {
-        const row = [];
-        for (let j = 0; j < dimension; j++) {
-            row.push(new Card(i, j));
-            const cardEl = document.getElementsByTagName('tr')[i].getElementsByTagName('td')[j];
-            cardEl.textContent = i
-            cardEl.addEventListener('click', () => cardClickHandler(cardEl));
-        }
-        FIELD.push(row)
-    }
-    console.log(FIELD)
+function startGame(dimensionRow, dimensionCol) {
+    SCORE = 0;
+    GuessedCards = dimensionRow * dimensionCol;
+    renderGrid(dimensionRow, dimensionCol);
+    addResetListener(dimensionRow, dimensionCol);
 }
 
 // function getFiles (dir, files_){
@@ -77,31 +74,22 @@ function shuffle(array) {
 }
 
 
-function renderGrid (dimension) {
-    SCORE = 0;
+function renderGrid (dimensionRow, dimensionCol) {
     document.getElementById('score').innerText = `ТВОИ ОЧКИ: ${SCORE}`;
-    // document.getElementById('description').innerText = `Найди карточки, дающие в сумме ${(DIMENSION + 1) * 11}`
-    GuessedCards = dimension ** 2;
+    GuessedCards = dimensionRow * dimensionCol;
     const container = document.getElementById('fieldWrapper');
     container.innerHTML = '';
 
-    // let items = [];
-    // for (let i = 0; i < dimension; i++) {
-    //     for (let j = 0; j < dimension; j++) {
-    //         items.push(`${(i + 1) * 10 + j + 1}`);
-    //     }
-    // }
-
-    let items = shuffle(IMAGES).slice(0, dimension ** 2 / 2);
+    let items = shuffle(IMAGES).slice(0, dimensionRow * dimensionCol / 2);
     items = shuffle(items.concat(items))
     const res_items = [];
-    for (let i = 0; i < dimension ** 2; i += dimension) {
-        res_items.push(items.slice(i, i + dimension));
+    for (let i = 0; i < dimensionRow * dimensionCol; i += dimensionCol) {
+        res_items.push(items.slice(i, i + dimensionCol));
     }
 
-    for (let i = 0; i < dimension; i++) {
+    for (let i = 0; i < dimensionRow; i++) {
         const row = document.createElement('tr');
-        for (let j = 0; j < dimension; j++) {
+        for (let j = 0; j < dimensionCol; j++) {
             const cell = document.createElement('td');
             cell.textContent = res_items[i][j];
             console.log(res_items[i][j]);
@@ -134,7 +122,7 @@ function cardClickHandler(targetCard) {
         if (targetCard.textContent === lastOpenedCard.textContent) {
             targetCard.style.backgroundColor = GuessedBackgroundColor;
             lastOpenedCard.style.backgroundColor = GuessedBackgroundColor;
-            SCORE += DIMENSION;
+            SCORE += 5;
             GuessedCards -= 2;
             if (GuessedCards === 0) {
                 alert(`You win! Score: ${SCORE}`);
@@ -156,11 +144,7 @@ function cardClickHandler(targetCard) {
     }
 }
 
-function addResetListener () {
+function addResetListener (dimensionRow, dimensionCol) {
     const resetButton = document.getElementById('reset');
-    resetButton.addEventListener('click', resetClickHandler);
-}
-
-function resetClickHandler () {
-    renderGrid(DIMENSION);
+    resetButton.addEventListener('click', () => startGame(dimensionRow, dimensionCol));
 }
