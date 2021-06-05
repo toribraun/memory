@@ -29,10 +29,10 @@ if (HardLevelButton) {
     })
 }
 
-const GuessedBackgroundColor = 'red'
 const defaultBG = 'url("images/back_card.png")'
 const IMAGES = ['01.png', '02.png', '03.png', '04.png', '05.png', '06.png',
-    '07.png', 'red.png', 'vinous.png', 'white.png', 'yellow.png'];
+    '07.png', 'red.png', 'vinous.png', 'white.png', 'yellow.png', 'black.png', 'blue.png',
+    'mint.png', 'pink.png', 'purple.png', 'orange.png', 'gray.png'];
 let SCORE = 0;
 const FIELD = [];
 let GuessedCards;
@@ -107,6 +107,15 @@ function renderGrid (dimensionRow, dimensionCol) {
 
 function updateScoreOnScreen() {
     document.getElementById('score').innerText = `ТВОИ ОЧКИ: ${SCORE}`;
+    if (SCORE > 0) {
+        const labelScore = document.getElementById('labelScore');
+        labelScore.style.transitionDuration = `1s`;
+        labelScore.style.transform = 'scale(1.3)';
+        setTimeout(
+            () => {
+                labelScore.style.transform = 'scale(1)';
+            }, 500);
+    }
 }
 
 function countScore() {
@@ -127,7 +136,7 @@ function countScore() {
 function closeExtraOpenedCards() {
     let allCards = Object.values(document.getElementsByTagName('td'));
     let openedCards = allCards.filter(function(card) {
-        return card.style.backgroundColor !== GuessedBackgroundColor && card.style.backgroundImage !== defaultBG});
+        return getImageNameByCard(card) && card.style.backgroundImage !== defaultBG});
     if (openedCards.length > 1) {
         openedCards.forEach(function(card) {return card.style.backgroundImage = defaultBG});
     }
@@ -162,7 +171,7 @@ function soundClick() {
 
 
 function cardClickHandler(targetCard) {
-    if (!getImageNameByCard(targetCard))
+    if (!getImageNameByCard(targetCard) || targetCard === lastOpenedCard)
         return;
     closeExtraOpenedCards();
     soundClick();
@@ -171,8 +180,8 @@ function cardClickHandler(targetCard) {
         lastOpenedCard = targetCard;
     } else {
         if (isPair(targetCard, lastOpenedCard)) {
-            targetCard.style.backgroundColor = GuessedBackgroundColor;
-            lastOpenedCard.style.backgroundColor = GuessedBackgroundColor;
+            // targetCard.style.backgroundColor = GuessedBackgroundColor;
+            // lastOpenedCard.style.backgroundColor = GuessedBackgroundColor;
             SCORE += Math.max(scoreToAdd - scoreToDecrease, 0);
             updateScoreOnScreen();
             countScore();
@@ -182,15 +191,16 @@ function cardClickHandler(targetCard) {
             }
         } else {
             const secondCard = lastOpenedCard;
-            if (SCORE > 5)
+            if (SCORE > 5) {
                 SCORE -= 5;
+                updateScoreOnScreen();
+            }
             setTimeout(
                 () => {
                     targetCard.style.backgroundImage = defaultBG;
                     secondCard.style.backgroundImage = defaultBG;
                 }, 1500);
         }
-        updateScoreOnScreen();
         lastOpenedCard = null;
     }
 }
