@@ -141,9 +141,14 @@ function getImageNameByCard(card) {
 function isPair(card1, card2) {
     const [i1, j1] = card1.textContent.split(' ');
     const [i2, j2] = card2.textContent.split(' ');
-    console.log([i1, j1], [i2, j2])
-    return (i1 !== i2 || j1 !== j2) && FIELD[i1][j1] === FIELD[i2][j2];
+    if (FIELD[i1][j1] && FIELD[i2][j2] && (i1 !== i2 || j1 !== j2) && FIELD[i1][j1] === FIELD[i2][j2]) {
+        FIELD[i1][j1] = null;
+        FIELD[i2][j2] = null;
+        return true
+    }
+    return false;
 }
+
 
 function soundClick() {
     const audio = new Audio();
@@ -157,9 +162,11 @@ function soundClick() {
 
 
 function cardClickHandler(targetCard) {
+    if (!getImageNameByCard(targetCard))
+        return;
     closeExtraOpenedCards();
     soundClick();
-    targetCard.style.backgroundImage = `url(${'images/' + getImageNameByCard(targetCard)})`
+    targetCard.style.backgroundImage = `url(${'images/' + getImageNameByCard(targetCard)})`;
     if (lastOpenedCard === null) {
         lastOpenedCard = targetCard;
     } else {
@@ -175,7 +182,8 @@ function cardClickHandler(targetCard) {
             }
         } else {
             const secondCard = lastOpenedCard;
-            scoreToAdd -= 10;
+            if (SCORE > 5)
+                SCORE -= 5;
             setTimeout(
                 () => {
                     targetCard.style.backgroundImage = defaultBG;
