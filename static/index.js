@@ -1,10 +1,5 @@
 // import * as path from "path";
-<<<<<<< HEAD
 // import fs from "fs";
-=======
-// import fs from 'fs';
-// const fs = require('fs');
->>>>>>> 9a5f81287f7c339b5c2a2e17ce73413a722748ac
 
 const EasyLevelButton = document.getElementById('easyLevel');
 const MediumLevelButton = document.getElementById('mediumLevel');
@@ -35,6 +30,7 @@ if (HardLevelButton) {
 }
 
 const GuessedBackgroundColor = 'red'
+const defaultBG = 'url("images/back_card.png")'
 const IMAGES = ['black.png', 'blue.png', 'gray.png', 'mint.png', 'orange.png', 'pink.png',
     'purple.png', 'red.png', 'vinous.png', 'white.png', 'yellow.png'];
 let SCORE = 0;
@@ -108,9 +104,9 @@ function renderGrid (dimensionRow, dimensionCol) {
 function CloseExtraOpenedCards() {
     let allCards = Object.values(document.getElementsByTagName('td'));
     let openedCards = allCards.filter(function(card) {
-        return card.style.backgroundColor !== GuessedBackgroundColor && card.style.backgroundImage !== 'none'});
+        return card.style.backgroundColor !== GuessedBackgroundColor && card.style.backgroundImage !== defaultBG});
     if (openedCards.length > 1) {
-        openedCards.forEach(function(card) {return card.style.backgroundImage = 'none'});
+        openedCards.forEach(function(card) {return card.style.backgroundImage = defaultBG});
     }
 }
 
@@ -151,7 +147,7 @@ function cardClickHandler(targetCard) {
             SCORE += 40;
             GuessedCards -= 2;
             if (GuessedCards === 0) {
-                alert(`You win! Score: ${SCORE}`);
+                setTimeout(alert, 0, `You win! Score: ${SCORE}`);
             }
         }
         else {
@@ -161,8 +157,8 @@ function cardClickHandler(targetCard) {
             }
             setTimeout(
                 () => {
-                    targetCard.style.backgroundImage = 'none';
-                    secondCard.style.backgroundImage = 'none';
+                    targetCard.style.backgroundImage = defaultBG;
+                    secondCard.style.backgroundImage = defaultBG;
                 }, 1500);
         }
         document.getElementById('score').innerText = `ТВОИ ОЧКИ: ${SCORE}`;

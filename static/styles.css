@@ -91,7 +91,8 @@ header h1 {
 td {
     width: 100px;
     height: 120px;
-    background-size: 120px;
+    background-size: cover;
+    background-position: center center;
     background-image: url("images/back_card.png");
     border-radius: 5px;
     text-align: center;
@@ -117,6 +118,7 @@ td {
     border: 0px;
     text-transform: uppercase;
     font-family: "Segoe Script", "Comic Sans MS", sans-serif;
+    font-size: 28px;
     border-radius: 20px;
     width: 200px;
     padding: 10px;
