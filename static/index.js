@@ -1,6 +1,6 @@
 // import * as path from "path";
 // import fs from 'fs';
-
+// const fs = require('fs');
 
 const EasyLevelButton = document.getElementById('easyLevel');
 const MediumLevelButton = document.getElementById('mediumLevel');
@@ -122,10 +122,20 @@ function isPair(card1, card2) {
     return (i1 !== i2 || j1 !== j2) && FIELD[i1][j1] === FIELD[i2][j2];
 }
 
+function soundClick() {
+    const audio = new Audio();
+    audio.src = 'sound2.mp3';
+    audio.autoplay = true;
+    setTimeout(
+        () => {
+            audio.autoplay = false;
+        }, 1000);
+}
+
 
 function cardClickHandler(targetCard) {
-    console.log('click!');
     CloseExtraOpenedCards();
+    soundClick();
     targetCard.style.backgroundImage = `url(${'images/' + getImageNameByCard(targetCard)})`
     if (lastOpenedCard === null) {
         lastOpenedCard = targetCard;
