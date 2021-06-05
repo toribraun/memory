@@ -33,6 +33,7 @@ header h1 {
 #gameScreen {
     /*visibility: visible;*/
     display: none;
+    position: relative;
 }
 
 .levelButtons, .levelSubMenu, .mainMenuButtons, .rulesText, .rulesMenu {
@@ -72,29 +73,58 @@ header h1 {
     border-radius: 15px;
 }
 
+.container {
+    list-style-type: none;
+    margin: 20px auto;
+    border-radius: 20px;
+    width: fit-content;
+    padding: 30px;
+    background-color: #73a43b;
+    display: flex;
+}
+
 .table {
     margin: auto;
+    border-spacing: 10px;
 }
 
 td {
     width: 100px;
-    height: 100px;
-    background-size: 100px;
-    background-color: indianred;
+    height: 120px;
+    background-size: 120px;
+    background-image: url("images/back_card.png");
+    border-radius: 5px;
     text-align: center;
     color: transparent;
+    user-select: none;
+}
+
+.labelScore {
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    top: 95px;
+    display: block;
+    text-align: center;
+    font-size: 20px;
 }
 
 .resetButton {
     display: block;
-    margin: 20px auto;
-    font-size: 16px;
+    position: relative;
+    margin: 0px auto;
+    background-color: #73a43b;
+    border: 0px;
+    text-transform: uppercase;
+    font-family: "Segoe Script", "Comic Sans MS", sans-serif;
+    border-radius: 20px;
+    width: 200px;
+    padding: 10px;
+    color: #fbffa7;
 }
 
-.labelScore {
-    display: block;
-    text-align: center;
-    font-size: 20px;
+.resetButton:hover {
+    background-color: #44761E;
 }
 
 .rulesText {
@@ -107,7 +137,7 @@ footer {
     background-repeat: repeat-x;
     text-align: center;
     box-sizing: border-box;
-    position: absolute;
+    position: fixed;
     bottom: 0px;
     padding-top: 30px;
     width: 100%;
