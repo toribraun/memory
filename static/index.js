@@ -32,7 +32,8 @@ if (HardLevelButton) {
 const GuessedBackgroundColor = 'red'
 const defaultBG = 'url("images/back_card.png")'
 const IMAGES = ['01.png', '02.png', '03.png', '04.png', '05.png', '06.png',
-    '07.png', 'red.png', 'vinous.png', 'white.png', 'yellow.png'];
+    '07.png', '08.png', '09.png', '10.png', '11.png', '12.png', '13.png',
+    '14.png', '15.png', '16.png', '17.png', '18.png'];
 let SCORE = 0;
 const FIELD = [];
 let GuessedCards;

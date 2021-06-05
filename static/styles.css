@@ -91,7 +91,7 @@ header h1 {
 td {
     width: 100px;
     height: 120px;
-    background-size: cover;
+    background-size: 120px;
     background-position: center center;
     background-image: url("images/back_card.png");
     border-radius: 5px;
