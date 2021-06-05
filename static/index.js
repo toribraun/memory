@@ -4,6 +4,22 @@
 const EasyLevelButton = document.getElementById('easyLevel');
 const MediumLevelButton = document.getElementById('mediumLevel');
 const HardLevelButton = document.getElementById('hardLevel');
+const ShowRulesButton = document.getElementById('rulesButton');
+const CloseRulesButton = document.getElementById('backFromRules');
+
+if (ShowRulesButton) {
+    ShowRulesButton.addEventListener('click', function () {
+        document.getElementById('gameScreen').style.display = 'none';
+        document.getElementById('rulesScreen').style.display = 'block';
+    })
+}
+
+if (CloseRulesButton) {
+    CloseRulesButton.addEventListener('click', function () {
+        document.getElementById('rulesScreen').style.display = 'none';
+        document.getElementById('gameScreen').style.display = 'block';
+    })
+}
 
 if (EasyLevelButton) {
     EasyLevelButton.addEventListener('click', function () {
