@@ -1,24 +1,13 @@
 import express from "express";
-import hbs from "express-handlebars";
 import * as path from "path";
 
 const rootDir = process.cwd();
 const port = 1234;
 const app = express();
-// Выбираем в качестве движка шаблонов Handlebars
-app.set("view engine", "hbs");
-// Настраиваем пути и дефолтный view
-app.engine(
-    "hbs",
-    hbs({
-        extname: "hbs",
-        defaultView: "default",
-        layoutsDir: path.join(rootDir, "/views/layouts/"),
-        partialsDir: path.join(rootDir, "/views/partials/"),
-    })
-);
 
 app.use(express.static('static'));
+
+app.use('/path', express.static('node_modules/path'))
 
 app.get("/", (_, res) => {
     res.redirect("/menu");
