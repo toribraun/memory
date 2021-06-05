@@ -4,6 +4,22 @@
 const EasyLevelButton = document.getElementById('easyLevel');
 const MediumLevelButton = document.getElementById('mediumLevel');
 const HardLevelButton = document.getElementById('hardLevel');
+const ShowRulesButton = document.getElementById('rulesButton');
+const CloseRulesButton = document.getElementById('backFromRules');
+
+if (ShowRulesButton) {
+    ShowRulesButton.addEventListener('click', function () {
+        document.getElementById('gameScreen').style.display = 'none';
+        document.getElementById('rulesScreen').style.display = 'block';
+    })
+}
+
+if (CloseRulesButton) {
+    CloseRulesButton.addEventListener('click', function () {
+        document.getElementById('rulesScreen').style.display = 'none';
+        document.getElementById('gameScreen').style.display = 'block';
+    })
+}
 
 if (EasyLevelButton) {
     EasyLevelButton.addEventListener('click', function () {
@@ -29,7 +45,6 @@ if (HardLevelButton) {
     })
 }
 
-const GuessedBackgroundColor = 'red'
 const defaultBG = 'url("images/back_card.png")'
 const IMAGES = ['01.png', '02.png', '03.png', '04.png', '05.png', '06.png',
     '07.png', '08.png', '09.png', '10.png', '11.png', '12.png', '13.png',
@@ -108,6 +123,15 @@ function renderGrid (dimensionRow, dimensionCol) {
 
 function updateScoreOnScreen() {
     document.getElementById('score').innerText = `ТВОИ ОЧКИ: ${SCORE}`;
+    if (SCORE > 0) {
+        const labelScore = document.getElementById('labelScore');
+        labelScore.style.transitionDuration = `1s`;
+        labelScore.style.transform = 'scale(1.3)';
+        setTimeout(
+            () => {
+                labelScore.style.transform = 'scale(1)';
+            }, 500);
+    }
 }
 
 function countScore() {
@@ -128,7 +152,7 @@ function countScore() {
 function closeExtraOpenedCards() {
     let allCards = Object.values(document.getElementsByTagName('td'));
     let openedCards = allCards.filter(function(card) {
-        return card.style.backgroundColor !== GuessedBackgroundColor && card.style.backgroundImage !== defaultBG});
+        return getImageNameByCard(card) && card.style.backgroundImage !== defaultBG});
     if (openedCards.length > 1) {
         openedCards.forEach(function(card) {return card.style.backgroundImage = defaultBG});
     }
@@ -142,9 +166,14 @@ function getImageNameByCard(card) {
 function isPair(card1, card2) {
     const [i1, j1] = card1.textContent.split(' ');
     const [i2, j2] = card2.textContent.split(' ');
-    console.log([i1, j1], [i2, j2])
-    return (i1 !== i2 || j1 !== j2) && FIELD[i1][j1] === FIELD[i2][j2];
+    if (FIELD[i1][j1] && FIELD[i2][j2] && (i1 !== i2 || j1 !== j2) && FIELD[i1][j1] === FIELD[i2][j2]) {
+        FIELD[i1][j1] = null;
+        FIELD[i2][j2] = null;
+        return true
+    }
+    return false;
 }
+
 
 function soundClick() {
     const audio = new Audio();
@@ -158,15 +187,17 @@ function soundClick() {
 
 
 function cardClickHandler(targetCard) {
+    if (!getImageNameByCard(targetCard) || targetCard === lastOpenedCard)
+        return;
     closeExtraOpenedCards();
     soundClick();
-    targetCard.style.backgroundImage = `url(${'images/' + getImageNameByCard(targetCard)})`
+    targetCard.style.backgroundImage = `url(${'images/' + getImageNameByCard(targetCard)})`;
     if (lastOpenedCard === null) {
         lastOpenedCard = targetCard;
     } else {
         if (isPair(targetCard, lastOpenedCard)) {
-            targetCard.style.backgroundColor = GuessedBackgroundColor;
-            lastOpenedCard.style.backgroundColor = GuessedBackgroundColor;
+            // targetCard.style.backgroundColor = GuessedBackgroundColor;
+            // lastOpenedCard.style.backgroundColor = GuessedBackgroundColor;
             SCORE += Math.max(scoreToAdd - scoreToDecrease, 0);
             updateScoreOnScreen();
             countScore();
@@ -176,14 +207,16 @@ function cardClickHandler(targetCard) {
             }
         } else {
             const secondCard = lastOpenedCard;
-            scoreToAdd -= 10;
+            if (SCORE > 5) {
+                SCORE -= 5;
+                updateScoreOnScreen();
+            }
             setTimeout(
                 () => {
                     targetCard.style.backgroundImage = defaultBG;
                     secondCard.style.backgroundImage = defaultBG;
                 }, 1500);
         }
-        updateScoreOnScreen();
         lastOpenedCard = null;
     }
 }

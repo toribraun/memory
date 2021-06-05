@@ -25,7 +25,7 @@
         <header>
             <h1>Memory</h1>
         </header>
-        <div class="labelScore">
+        <div class="labelScore" id="labelScore">
             <p><strong id="score">ТВОИ ОЧКИ: 0</strong></p>
         </div>
         <div class="container">
@@ -41,7 +41,23 @@
         <menu class="levelSubMenu">
             <li onclick="document.location='index.html'">Главное меню</li>
             <li onclick="document.location='game.html'">Назад</li>
-            <li onclick="document.location='rules.html'">Правила</li>
+            <li id="rulesButton" >Правила</li>
+        </menu>
+    </div>
+    <div id="rulesScreen">
+        <header>
+            <h1>Правила</h1>
+        </header>
+        <div class="rulesText">
+            <p>В этой игре вам нужно искать пары одинаковых карточек.
+            <p>Карточки переворачиваются по нажатию.
+                Ваш счет увеличивается от совпадения открытой пары и уменьшается от несовпадения.
+                Но чем дольше вы будете искать пару, тем меньше баллов получите.
+                Для победы найдите все пары.
+            <p>Удачи!</p>
+        </div>
+        <menu class="rulesMenu">
+            <li id="backFromRules">Назад</li>
         </menu>
     </div>
     <footer></footer>
