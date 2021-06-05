@@ -37,12 +37,17 @@ let SCORE = 0;
 const FIELD = [];
 let GuessedCards;
 let lastOpenedCard = null;
+let currentTimerId;
+let scoreToDecrease = 0;
+let scoreToAdd = 0;
 
 
 function startGame(dimensionRow, dimensionCol) {
     FIELD.length = 0;
     SCORE = 0;
+    currentTimerId = null;
     GuessedCards = dimensionRow * dimensionCol;
+    countScore();
     renderGrid(dimensionRow, dimensionCol);
     addResetListener(dimensionRow, dimensionCol);
 }
@@ -74,7 +79,7 @@ function shuffle(array) {
 
 
 function renderGrid (dimensionRow, dimensionCol) {
-    document.getElementById('score').innerText = `ТВОИ ОЧКИ: ${SCORE}`;
+    updateScoreOnScreen();
     GuessedCards = dimensionRow * dimensionCol;
     const container = document.getElementById('fieldWrapper');
     container.innerHTML = '';
@@ -100,8 +105,26 @@ function renderGrid (dimensionRow, dimensionCol) {
     }
 }
 
+function updateScoreOnScreen() {
+    document.getElementById('score').innerText = `ТВОИ ОЧКИ: ${SCORE}`;
+}
 
-function CloseExtraOpenedCards() {
+function countScore() {
+    if (currentTimerId !== null) {
+        clearInterval(currentTimerId);
+        currentTimerId = null;
+    }
+    scoreToAdd = 100;
+    scoreToDecrease = 0;
+    currentTimerId = setInterval(() => {
+        if (scoreToDecrease < 60)  {
+            scoreToDecrease += 2;
+        }
+    }, 1000);
+}
+
+
+function closeExtraOpenedCards() {
     let allCards = Object.values(document.getElementsByTagName('td'));
     let openedCards = allCards.filter(function(card) {
         return card.style.backgroundColor !== GuessedBackgroundColor && card.style.backgroundImage !== 'none'});
@@ -134,34 +157,32 @@ function soundClick() {
 
 
 function cardClickHandler(targetCard) {
-    CloseExtraOpenedCards();
+    closeExtraOpenedCards();
     soundClick();
     targetCard.style.backgroundImage = `url(${'images/' + getImageNameByCard(targetCard)})`
     if (lastOpenedCard === null) {
         lastOpenedCard = targetCard;
-    }
-    else {
+    } else {
         if (isPair(targetCard, lastOpenedCard)) {
             targetCard.style.backgroundColor = GuessedBackgroundColor;
             lastOpenedCard.style.backgroundColor = GuessedBackgroundColor;
-            SCORE += 40;
+            SCORE += Math.max(scoreToAdd - scoreToDecrease, 0);
+            updateScoreOnScreen();
+            countScore();
             GuessedCards -= 2;
             if (GuessedCards === 0) {
                 alert(`You win! Score: ${SCORE}`);
             }
-        }
-        else {
+        } else {
             const secondCard = lastOpenedCard;
-            if (SCORE > 0) {
-                SCORE -= 10;
-            }
+            scoreToAdd -= 10;
             setTimeout(
                 () => {
                     targetCard.style.backgroundImage = 'none';
                     secondCard.style.backgroundImage = 'none';
                 }, 1500);
         }
-        document.getElementById('score').innerText = `ТВОИ ОЧКИ: ${SCORE}`;
+        updateScoreOnScreen();
         lastOpenedCard = null;
     }
 }
