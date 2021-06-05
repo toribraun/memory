@@ -1,48 +1,75 @@
+html {
+    size: auto;
+    background: url("images/bg_sky.png") no-repeat center center fixed;
+    background-size: cover;
+    font-family: "Comic Sans MS", sans-serif;
+    color: #fbffa7;
+}
+
+header {
+    background-color: rgb(68, 118, 30);
+    border-radius: 20px;
+    height: 150px;
+    box-sizing: border-box;
+    max-height: 150px;
+    margin: auto;
+    width: 90%;
+    max-width: 1100px;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: "Segoe Script", "Comic Sans MS", sans-serif;
+    text-align: center;
+}
+
+header h1 {
+    font-size: 400%;
+    text-transform: uppercase;
+    color: #f5fd5b;
+    line-height: 100%;
+}
+
 #gameScreen {
     /*visibility: visible;*/
     display: none;
 }
 
-.levelButtons {
-    margin: 0;
-    padding: 0;
+.levelButtons, .levelSubMenu, .mainMenuButtons, .rulesText, .rulesMenu {
     list-style-type: none;
+    margin: 20px auto;
+    border-radius: 20px;
+    width: 80%;
+    max-width: 900px;
+    padding: 30px;
+    background-color: #73a43b;
 }
 
-.levelButtons li {
+.levelSubMenu, .rulesMenu {
+    display: flex;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.levelButtons li, .levelSubMenu li, .mainMenuButtons li, .rulesMenu li {
     width: 270px;
     margin: 10px auto;
-    font-size: 30px;
+    font-size: 28px;
     text-decoration: none;
     text-align: center;
 }
 
-.levelButtons li:hover {
+.levelSubMenu li, .rulesMenu li {
+    text-transform: uppercase;
+    font-family: "Segoe Script", "Comic Sans MS", sans-serif;
+}
+
+.levelButtons li:hover, .levelSubMenu li:hover, .mainMenuButtons li:hover, .rulesMenu li:hover {
     cursor: auto;
-    background-color: darkgrey;
-}
-
-.mainMenuButtons {
-    margin: 0;
-    padding: 0;
-    list-style-type: none;
-}
-
-.mainMenuButtons li {
-    width: 270px;
-    margin: 10px auto;
-    font-size: 30px;
-    text-decoration: none;
-    text-align: center;
-}
-
-.mainMenuButtons li:hover {
-    cursor: auto;
-    background-color: darkgrey;
-}
-
-header {
-    text-align: center;
+    background-color: rgb(68, 118, 30);
+    border-radius: 15px;
 }
 
 .table {
@@ -71,8 +98,21 @@ td {
 }
 
 .rulesText {
-    margin-left: auto;
-    margin-right: auto;
-    width: 650px;
     font-size: 22px;
+}
+
+footer {
+    background-size: contain;
+    background-image: url("images/bg_grass.png");
+    background-repeat: repeat-x;
+    text-align: center;
+    box-sizing: border-box;
+    position: absolute;
+    bottom: 0px;
+    padding-top: 30px;
+    width: 100%;
+    max-width: 100%;
+    left: 0px;
+    z-index: -1;
+    height: 70px;
 }

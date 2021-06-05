@@ -1,5 +1,5 @@
-// import * as path from "path";
-// import fs from "fs";
+//import * as path from "/path";
+//import fs from "/fs";
 
 const EasyLevelButton = document.getElementById('easyLevel');
 const MediumLevelButton = document.getElementById('mediumLevel');
