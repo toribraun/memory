@@ -1,0 +1,30 @@
+{
+  "name": "memory",
+  "version": "1.0.0",
+  "description": "Игра Мемори",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./server.mjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/toribraun/memory.git"
+  },
+  "keywords": [
+    "memory",
+    "game"
+  ],
+  "author": "Виктория Браун, Анжелика Салдина, Екатерина Иванова",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/toribraun/memory/issues"
+  },
+  "homepage": "https://github.com/toribraun/memory#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "express-handlebars": "^5.3.2",
+    "node-fetch": "^2.6.1",
+    "path": "^0.12.7"
+  }
+}
