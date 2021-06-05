@@ -2,7 +2,7 @@
   "name": "memory",
   "version": "1.0.0",
   "description": "Игра Мемори",
-  "main": "index.js",
+  "main": "static/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node ./server.mjs"
@@ -25,5 +25,8 @@
     "express": "^4.17.1",
     "node-fetch": "^2.6.1",
     "path": "^0.12.7"
+  },
+  "devDependencies": {
+    "@types/node": "^15.12.1"
   }
 }

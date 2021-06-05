@@ -1,5 +1,10 @@
 // import * as path from "path";
+<<<<<<< HEAD
 // import fs from "fs";
+=======
+// import fs from 'fs';
+// const fs = require('fs');
+>>>>>>> 9a5f81287f7c339b5c2a2e17ce73413a722748ac
 
 const EasyLevelButton = document.getElementById('easyLevel');
 const MediumLevelButton = document.getElementById('mediumLevel');
@@ -33,29 +38,27 @@ const GuessedBackgroundColor = 'red'
 const IMAGES = ['black.png', 'blue.png', 'gray.png', 'mint.png', 'orange.png', 'pink.png',
     'purple.png', 'red.png', 'vinous.png', 'white.png', 'yellow.png'];
 let SCORE = 0;
+const FIELD = [];
 let GuessedCards;
 let lastOpenedCard = null;
 
 
 function startGame(dimensionRow, dimensionCol) {
+    FIELD.length = 0;
     SCORE = 0;
     GuessedCards = dimensionRow * dimensionCol;
     renderGrid(dimensionRow, dimensionCol);
     addResetListener(dimensionRow, dimensionCol);
 }
 
-// function getFiles (dir, files_){
-//     files_ = files_ || [];
-//     let files = fs.readdirSync(dir);
+// function getImages() {
+//     let res = [];
+//     console.log(path.join(process.cwd(), "/static/images"));
+//     let files = fs.readdirSync(path.join(process.cwd(), "/static/images"));
 //     for (const i in files) {
-//         const name = dir + '/' + files[i];
-//         if (fs.statSync(name).isDirectory()){
-//             getFiles(name, files_);
-//         } else {
-//             files_.push(name);
-//         }
+//         res.push(files[i]);
 //     }
-//     return files_;
+//     return res;
 // }
 //
 // console.log(path.join(process.cwd(), "/images"));
@@ -79,7 +82,6 @@ function renderGrid (dimensionRow, dimensionCol) {
     GuessedCards = dimensionRow * dimensionCol;
     const container = document.getElementById('fieldWrapper');
     container.innerHTML = '';
-
     let items = shuffle(IMAGES).slice(0, dimensionRow * dimensionCol / 2);
     items = shuffle(items.concat(items))
     const res_items = [];
@@ -89,9 +91,11 @@ function renderGrid (dimensionRow, dimensionCol) {
 
     for (let i = 0; i < dimensionRow; i++) {
         const row = document.createElement('tr');
+        FIELD.push([]);
         for (let j = 0; j < dimensionCol; j++) {
             const cell = document.createElement('td');
-            cell.textContent = res_items[i][j];
+            cell.textContent = `${i} ${j}`;
+            FIELD[i].push(res_items[i][j]);
             console.log(res_items[i][j]);
             cell.addEventListener('click', () => cardClickHandler(cell));
             row.appendChild(cell);
@@ -110,19 +114,41 @@ function CloseExtraOpenedCards() {
     }
 }
 
+function getImageNameByCard(card) {
+    const [i, j] = card.textContent.split(' ');
+    return FIELD[i][j]
+}
+
+function isPair(card1, card2) {
+    const [i1, j1] = card1.textContent.split(' ');
+    const [i2, j2] = card2.textContent.split(' ');
+    console.log([i1, j1], [i2, j2])
+    return (i1 !== i2 || j1 !== j2) && FIELD[i1][j1] === FIELD[i2][j2];
+}
+
+function soundClick() {
+    const audio = new Audio();
+    audio.src = 'sound2.mp3';
+    audio.autoplay = true;
+    setTimeout(
+        () => {
+            audio.autoplay = false;
+        }, 1000);
+}
+
 
 function cardClickHandler(targetCard) {
-    console.log('click!');
     CloseExtraOpenedCards();
-    targetCard.style.backgroundImage = `url(${'images/' + targetCard.textContent})`
+    soundClick();
+    targetCard.style.backgroundImage = `url(${'images/' + getImageNameByCard(targetCard)})`
     if (lastOpenedCard === null) {
         lastOpenedCard = targetCard;
     }
     else {
-        if (targetCard.textContent === lastOpenedCard.textContent) {
+        if (isPair(targetCard, lastOpenedCard)) {
             targetCard.style.backgroundColor = GuessedBackgroundColor;
             lastOpenedCard.style.backgroundColor = GuessedBackgroundColor;
-            SCORE += 5;
+            SCORE += 40;
             GuessedCards -= 2;
             if (GuessedCards === 0) {
                 alert(`You win! Score: ${SCORE}`);
@@ -131,7 +157,7 @@ function cardClickHandler(targetCard) {
         else {
             const secondCard = lastOpenedCard;
             if (SCORE > 0) {
-                SCORE -= 1;
+                SCORE -= 10;
             }
             setTimeout(
                 () => {
