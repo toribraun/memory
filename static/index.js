@@ -43,7 +43,7 @@ if (HardLevelButton) {
 const defaultBG = 'url("images/back_card.png")'
 const IMAGES = ['01.png', '02.png', '03.png', '04.png', '05.png', '06.png',
     '07.png', '08.png', '09.png', '10.png', '11.png', '12.png', '13.png',
-    '14.png', '15.png', '16.png', '17.png', '18.png', '19.png'];
+    '14.png', '15.png', '16.png', '17.png', '18.png', '19.png', '20.png'];
 let SCORE = 0;
 const FIELD = [];
 let CardsToGuess;
@@ -57,6 +57,7 @@ let scoreToAdd = 0;
 function startGame(dimensionRow, dimensionCol) {
     document.getElementsByClassName('levelMenu')[0].hidden = true;
     document.getElementById('gameScreen').style.display = 'block';
+    document.querySelector('.winScreen').style.display = 'none';
     FIELD.length = 0;
     SCORE = 0;
     currentTimerId = null;
@@ -143,6 +144,24 @@ function countScore() {
     }, 1000);
 }
 
+function showwinScreen() {
+    const winScreen = document.querySelector('.winText p');
+    winScreen.innerHTML = `Ты нашел все пары и набрал ${SCORE} ${getNoun()}!`
+    document.querySelector('.winScreen').style.display = 'block';
+    document.querySelector('#gameScreen').style.display = 'none';
+}
+
+function getNoun() {
+    const lastDigits = SCORE % 100;
+    if (lastDigits < 10 || lastDigits > 20) {
+        if ([2, 3, 4].indexOf(SCORE % 10) !== -1) {
+            return 'очка'
+        } else if (SCORE % 10 === 1) {
+            return 'очко'
+        }
+    }
+    return 'очков';
+}
 
 function closeExtraOpenedCards() {
     if (CloseCardsTimerId) {
@@ -206,7 +225,7 @@ function cardClickHandler(targetCard) {
             countScore();
             CardsToGuess -= 2;
             if (CardsToGuess === 0) {
-                setTimeout(alert, 0, `You win! Score: ${SCORE}`);
+                showwinScreen();
             }
         } else {
             const secondCard = lastOpenedCard;

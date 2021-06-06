@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Memory</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="/images/favicon.png">
     <script type="module" src="index.js"></script>
 </head>
 <body>
@@ -26,8 +27,10 @@
         <header>
             <h1>Memory</h1>
         </header>
+        <div class="labelScoreContainer">
         <div class="labelScore" id="labelScore">
             <p><strong id="score">ТВОИ ОЧКИ: 0</strong></p>
+        </div>
         </div>
         <div class="container">
             <table class="table">
@@ -43,6 +46,19 @@
             <li onclick="document.location='index.html'">Главное меню</li>
             <li onclick="document.location='game.html'">Назад</li>
             <li id="rulesButton">Правила</li>
+        </menu>
+    </div>
+    <div class="winScreen">
+        <header>
+            <h1>Memory</h1>
+        </header>
+        <div class="winText">
+            <h1>Поздравляем!</h1>
+            <p><strong class="totalScore">Ты нашел все пары и набрал 0 очков!</strong></p>
+        </div>
+        <menu class="levelSubMenu">
+            <li onclick="document.location='index.html'">Главное меню</li>
+            <li onclick="document.location='game.html'">Заново</li>
         </menu>
     </div>
     <div id="rulesScreen">
