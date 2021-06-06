@@ -18,14 +18,14 @@ function renderLeaderboard() {
 }
 
 function getSortedScores() {
-    const scores = [];
+    let scores = [];
     for (const key in localStorage) {
         const value = localStorage.getItem(key);
         if (value && key !== 'sound') {
             scores.push({username: key, score: value});
         }
     }
-    scores.sort((a, b) => b.score - a.score);
+    scores = scores.sort((a, b) => b.score - a.score).slice(0, 200);
     return scores;
 }
 

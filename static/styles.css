@@ -12,7 +12,9 @@ header {
     height: 150px;
     box-sizing: border-box;
     max-height: 150px;
-    margin: auto;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 20px;
     width: 90%;
     max-width: 1100px;
     padding: 20px;
@@ -163,16 +165,20 @@ td {
 
 .leaderBoard {
     position: relative;
-    height: 600px;
-    overflow: auto;
+    max-height: calc(100vh - 280px);
+    overflow-y: scroll;
     display: block;
     margin: 0 auto;
+}
+
+.leaderBoard::-webkit-scrollbar {
+    width: 0px;
 }
 
 .leaderBoardTable td{
     width: 100px;
     height: 40px;
-    background-color: #44761E;
+    background-color: #73a43b;
     background-size: 120px;
     background-position: center center;
     background-image: none;
@@ -206,7 +212,8 @@ td {
 }
 
 .leaderBoard {
-    display: block;
+    display: flex;
+    justify-content: center;
     position: relative;
     margin: auto;
 }
@@ -217,6 +224,56 @@ td {
 
 .rulesText {
     font-size: 22px;
+}
+
+#inputName {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+}
+
+#inputName label input, #submitButton {
+    margin-top: 10px;
+    text-align: center;
+    font-weight: bold;
+    border: 0px;
+    font-family: "Comic Sans MS", sans-serif;
+}
+
+#inputName label input {
+    height: 30px;
+    color: #44761E;
+    margin: 0px;
+    background-color: transparent;
+}
+
+#inputName label input::placeholder {
+    color: #73a43b;
+    opacity: 50%;
+}
+
+.form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 15px;
+    overflow: hidden;
+    background-color: #fbffa7;
+}
+
+#submitButton {
+    font-size: 20px;
+    background-color: #44761E;
+    padding: 5px;
+    margin: 0px;
+    color: #fbffa7;
+    display: inline-block;
+    font-family: "Segoe Script", "Comic Sans MS", sans-serif;
+    text-transform: uppercase;
+}
+
+#submitButton:hover {
+    color: #f5fd5b;
 }
 
 footer {
