@@ -36,7 +36,7 @@ if (MediumLevelButton) {
 
 if (HardLevelButton) {
     HardLevelButton.addEventListener('click', function () {
-        startGame(6, 6);
+        startGame(5, 8);
     })
 }
 
@@ -228,3 +228,9 @@ function addResetListener (dimensionRow, dimensionCol) {
     const resetButton = document.getElementById('reset');
     resetButton.addEventListener('click', () => startGame(dimensionRow, dimensionCol));
 }
+
+
+function addResultToLeaderboard(name) {
+    localStorage.setItem(name, Math.max(SCORE, Number(localStorage.getItem(name))).toString());
+}
+
