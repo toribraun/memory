@@ -171,8 +171,13 @@ td {
     margin: 0 auto;
 }
 
+<<<<<<< HEAD
 .leaderBoard::-webkit-scrollbar {
     width: 0px;
+=======
+.leaderBoardTable {
+
+>>>>>>> b25fc8d8992ed58b19bdf9493cd40ec13aaac3e6
 }
 
 .leaderBoardTable td{
