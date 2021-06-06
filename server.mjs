@@ -2,7 +2,7 @@ import express from "express";
 import * as path from "path";
 
 const rootDir = process.cwd();
-const port = 8000;
+// const port = 8000;
 const app = express();
 
 app.use(express.static('static'));
@@ -25,4 +25,4 @@ app.get("/menu", (req, res) => {
     res.sendFile(path.join(rootDir, "static/index.html"));
 });
 
-app.listen(port, () => console.log(`App listening on port ${port}`));
+app.listen(port, () => console.log(`App listening`));
