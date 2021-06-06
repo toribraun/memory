@@ -25,4 +25,4 @@ app.get("/menu", (req, res) => {
     res.sendFile(path.join(rootDir, "static/index.html"));
 });
 
-app.listen(port, () => console.log(`App listening`));
+// app.listen(port, () => console.log(`App listening on port ${port}`));
