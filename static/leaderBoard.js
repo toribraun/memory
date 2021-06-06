@@ -29,5 +29,4 @@ function getSortedScores() {
     return scores;
 }
 
-window.localStorage.clear();
 renderLeaderboard();
