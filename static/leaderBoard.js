@@ -29,4 +29,6 @@ function getSortedScores() {
     return scores;
 }
 
+localStorage.setItem('Alice', '768');
+localStorage.setItem('Bob', '768');
 renderLeaderboard();
