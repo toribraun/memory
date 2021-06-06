@@ -106,7 +106,7 @@ header h1 {
 }
 
 .levelButtons li:hover, .levelSubMenu li:hover, .mainMenuButtons li:hover, .rulesMenu li:hover {
-    cursor: auto;
+    cursor: default;
     background-color: rgb(68, 118, 30);
     border-radius: 15px;
 }
@@ -156,9 +156,21 @@ td {
     overflow: hidden;
 }
 
+/*#leaderBoardWrapper {*/
+/*    height: 100px;*/
+/*    overflow: scroll;*/
+/*}*/
+
+.leaderBoard {
+    position: relative;
+    height: 600px;
+    overflow: auto;
+    display: block;
+    margin: 0 auto;
+}
+
 .leaderBoardTable td{
     width: 100px;
-    min-width: 80px;
     height: 40px;
     background-color: #44761E;
     background-size: 120px;
@@ -168,7 +180,6 @@ td {
     text-align: center;
     color: #fbffa7;
 }
-
 
 .resetButton, .mainMenuButton {
     display: block;
@@ -200,7 +211,7 @@ td {
     margin: auto;
 }
 
-.resetButton:hover {
+.resetButton:hover,  .mainMenuButton:hover {
     background-color: #44761E;
 }
 

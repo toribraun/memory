@@ -55,6 +55,9 @@ let scoreToAdd = 0;
 let soundIsOn = checkSoundState();
 document.querySelectorAll('.sound_icon').forEach(e => e.addEventListener('click', turnSound));
 
+// if (!localStorage.getItem('leaderboardScores')) {
+//     localStorage.setItem()
+// }
 
 function startGame(dimensionRow, dimensionCol) {
     document.getElementsByClassName('levelMenu')[0].hidden = true;
