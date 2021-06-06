@@ -2,7 +2,8 @@ import express from "express";
 import * as path from "path";
 
 const rootDir = process.cwd();
-const port = 8000;
+// const port = 8000;
+const port = process.env.PORT || 8000;
 const app = express();
 
 app.use(express.static('static'));
@@ -26,3 +27,5 @@ app.get("/menu", (req, res) => {
 });
 
 app.listen(port, () => console.log(`App listening on port ${port}`));
+
+// app.listen();
