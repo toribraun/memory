@@ -7,6 +7,7 @@ const HardLevelButton = document.getElementById('hardLevel');
 const ShowRulesButton = document.getElementById('rulesButton');
 const CloseRulesButton = document.getElementById('backFromRules');
 
+
 if (ShowRulesButton) {
     ShowRulesButton.addEventListener('click', function () {
         document.getElementById('gameScreen').style.display = 'none';
@@ -23,24 +24,18 @@ if (CloseRulesButton) {
 
 if (EasyLevelButton) {
     EasyLevelButton.addEventListener('click', function () {
-        document.getElementsByClassName('levelMenu')[0].hidden = true;
-        document.getElementById('gameScreen').style.display = 'block';
         startGame(4, 5);
     })
 }
 
 if (MediumLevelButton) {
     MediumLevelButton.addEventListener('click', function () {
-        document.getElementsByClassName('levelMenu')[0].hidden = true;
-        document.getElementById('gameScreen').style.display = 'block';
         startGame(5, 6);
     })
 }
 
 if (HardLevelButton) {
     HardLevelButton.addEventListener('click', function () {
-        document.getElementsByClassName('levelMenu')[0].hidden = true;
-        document.getElementById('gameScreen').style.display = 'block';
         startGame(6, 6);
     })
 }
@@ -48,10 +43,11 @@ if (HardLevelButton) {
 const defaultBG = 'url("images/back_card.png")'
 const IMAGES = ['01.png', '02.png', '03.png', '04.png', '05.png', '06.png',
     '07.png', '08.png', '09.png', '10.png', '11.png', '12.png', '13.png',
-    '14.png', '15.png', '16.png', '17.png', '18.png'];
+    '14.png', '15.png', '16.png', '17.png', '18.png', '19.png'];
 let SCORE = 0;
 const FIELD = [];
-let GuessedCards;
+let CardsToGuess;
+let CloseCardsTimerId;
 let lastOpenedCard = null;
 let currentTimerId;
 let scoreToDecrease = 0;
@@ -59,10 +55,12 @@ let scoreToAdd = 0;
 
 
 function startGame(dimensionRow, dimensionCol) {
+    document.getElementsByClassName('levelMenu')[0].hidden = true;
+    document.getElementById('gameScreen').style.display = 'block';
     FIELD.length = 0;
     SCORE = 0;
     currentTimerId = null;
-    GuessedCards = dimensionRow * dimensionCol;
+    CardsToGuess = dimensionRow * dimensionCol;
     countScore();
     renderGrid(dimensionRow, dimensionCol);
     addResetListener(dimensionRow, dimensionCol);
@@ -77,9 +75,7 @@ function startGame(dimensionRow, dimensionCol) {
 //     }
 //     return res;
 // }
-//
-// console.log(path.join(process.cwd(), "/images"));
-// console.log(getFiles(path.join(process.cwd(), "/images")));
+
 
 function shuffle(array) {
     let currentIndex = array.length,  randomIndex;
@@ -96,7 +92,7 @@ function shuffle(array) {
 
 function renderGrid (dimensionRow, dimensionCol) {
     updateScoreOnScreen();
-    GuessedCards = dimensionRow * dimensionCol;
+    CardsToGuess = dimensionRow * dimensionCol;
     const container = document.getElementById('fieldWrapper');
     container.innerHTML = '';
     let items = shuffle(IMAGES).slice(0, dimensionRow * dimensionCol / 2);
@@ -113,7 +109,6 @@ function renderGrid (dimensionRow, dimensionCol) {
             const cell = document.createElement('td');
             cell.textContent = `${i} ${j}`;
             FIELD[i].push(res_items[i][j]);
-            console.log(res_items[i][j]);
             cell.addEventListener('click', () => cardClickHandler(cell));
             row.appendChild(cell);
         }
@@ -150,6 +145,9 @@ function countScore() {
 
 
 function closeExtraOpenedCards() {
+    if (CloseCardsTimerId) {
+        clearTimeout(CloseCardsTimerId);
+    }
     let allCards = Object.values(document.getElementsByTagName('td'));
     let openedCards = allCards.filter(function(card) {
         return getImageNameByCard(card) && card.style.backgroundImage !== defaultBG});
@@ -174,10 +172,9 @@ function isPair(card1, card2) {
     return false;
 }
 
-
-function soundClick() {
+function playAudio(audioFile) {
     const audio = new Audio();
-    audio.src = 'sound2.mp3';
+    audio.src = audioFile;
     audio.autoplay = true;
     setTimeout(
         () => {
@@ -185,24 +182,30 @@ function soundClick() {
         }, 1000);
 }
 
+function soundClickCard() {
+    playAudio('sound2.mp3')
+}
+
+function soundClickButton() {
+    playAudio('click1.mp3')
+}
+
 
 function cardClickHandler(targetCard) {
     if (!getImageNameByCard(targetCard) || targetCard === lastOpenedCard)
         return;
     closeExtraOpenedCards();
-    soundClick();
+    soundClickCard();
     targetCard.style.backgroundImage = `url(${'images/' + getImageNameByCard(targetCard)})`;
     if (lastOpenedCard === null) {
         lastOpenedCard = targetCard;
     } else {
         if (isPair(targetCard, lastOpenedCard)) {
-            // targetCard.style.backgroundColor = GuessedBackgroundColor;
-            // lastOpenedCard.style.backgroundColor = GuessedBackgroundColor;
             SCORE += Math.max(scoreToAdd - scoreToDecrease, 0);
             updateScoreOnScreen();
             countScore();
-            GuessedCards -= 2;
-            if (GuessedCards === 0) {
+            CardsToGuess -= 2;
+            if (CardsToGuess === 0) {
                 setTimeout(alert, 0, `You win! Score: ${SCORE}`);
             }
         } else {
@@ -211,7 +214,7 @@ function cardClickHandler(targetCard) {
                 SCORE -= 5;
                 updateScoreOnScreen();
             }
-            setTimeout(
+            CloseCardsTimerId = setTimeout(
                 () => {
                     targetCard.style.backgroundImage = defaultBG;
                     secondCard.style.backgroundImage = defaultBG;

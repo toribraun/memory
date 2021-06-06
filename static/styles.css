@@ -39,11 +39,6 @@ header h1 {
     display: none;
 }
 
-/*#rulesScreen {*/
-/*    display: none;*/
-/*    position: relative;*/
-/*}*/
-
 .levelButtons, .levelSubMenu, .mainMenuButtons, .rulesText, .rulesMenu {
     list-style-type: none;
     margin: 20px auto;
