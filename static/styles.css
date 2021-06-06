@@ -169,6 +169,10 @@ td {
     margin: 0 auto;
 }
 
+.leaderBoardTable {
+
+}
+
 .leaderBoardTable td{
     width: 100px;
     height: 40px;
