@@ -43,7 +43,7 @@ if (HardLevelButton) {
 const defaultBG = 'url("images/back_card.png")'
 const IMAGES = ['01.png', '02.png', '03.png', '04.png', '05.png', '06.png',
     '07.png', '08.png', '09.png', '10.png', '11.png', '12.png', '13.png',
-    '14.png', '15.png', '16.png', '17.png', '18.png', '19.png'];
+    '14.png', '15.png', '16.png', '17.png', '18.png', '19.png', '20.png'];
 let SCORE = 0;
 const FIELD = [];
 let CardsToGuess;
