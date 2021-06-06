@@ -39,7 +39,7 @@ header h1 {
     display: none;
 }
 
-.levelButtons, .levelSubMenu, .mainMenuButtons, .rulesText, .rulesMenu {
+.levelButtons, .levelSubMenu, .mainMenuButtons, .rulesText, .rulesMenu, .winText {
     list-style-type: none;
     margin: 20px auto;
     border-radius: 20px;
@@ -57,12 +57,24 @@ header h1 {
     align-items: center;
 }
 
-.levelButtons li, .levelSubMenu li, .mainMenuButtons li, .rulesMenu li {
+.levelButtons li, .levelSubMenu li, .mainMenuButtons li, .rulesMenu li, .winText h1, .winText p {
     width: 270px;
     margin: 10px auto;
     font-size: 28px;
     text-decoration: none;
     text-align: center;
+}
+
+.winText h1, .winText p {
+    width: auto;
+}
+
+.winText p {
+    font-size: 20px;
+}
+
+.winScreen {
+    display: none;
 }
 
 .levelSubMenu li, .rulesMenu li {
