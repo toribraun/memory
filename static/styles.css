@@ -152,8 +152,8 @@ td {
     position: absolute;
     top: 95px;
     max-width: 100%;
-    left:0px;
-    right: 0px;
+    left:0;
+    right: 0;
     height: 50px;
     overflow: hidden;
 }
@@ -172,11 +172,13 @@ td {
 }
 
 .leaderBoard::-webkit-scrollbar {
-    width: 0px;
+    width: 0;
 }
 
-.leaderBoardTable td{
-    width: 100px;
+.leaderBoardTable td {
+    padding-left: 10px;
+    padding-right: 10px;
+    width: auto;
     height: 40px;
     background-color: #73a43b;
     background-size: 120px;
@@ -190,9 +192,9 @@ td {
 .resetButton, .mainMenuButton {
     display: block;
     position: relative;
-    margin: 0px auto;
+    margin: 0 auto;
     background-color: #73a43b;
-    border: 0px;
+    border: 0;
     text-transform: uppercase;
     font-family: "Segoe Script", "Comic Sans MS", sans-serif;
     font-size: 28px;
@@ -242,14 +244,14 @@ td {
     margin-top: 10px;
     text-align: center;
     font-weight: bold;
-    border: 0px;
+    border: 0;
     font-family: "Comic Sans MS", sans-serif;
 }
 
 #inputName label input {
     height: 30px;
     color: #44761E;
-    margin: 0px;
+    margin: 0;
     background-color: transparent;
 }
 
@@ -271,7 +273,7 @@ td {
     font-size: 20px;
     background-color: #44761E;
     padding: 5px;
-    margin: 0px;
+    margin: 0;
     color: #fbffa7;
     display: inline-block;
     font-family: "Segoe Script", "Comic Sans MS", sans-serif;
@@ -289,11 +291,11 @@ footer {
     text-align: center;
     box-sizing: border-box;
     position: fixed;
-    bottom: 0px;
+    bottom: 0;
     padding-top: 30px;
     width: 100%;
     max-width: 100%;
-    left: 0px;
+    left: 0;
     z-index: -1;
     height: 70px;
 }

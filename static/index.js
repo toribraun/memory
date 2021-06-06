@@ -233,7 +233,6 @@ function addResultToLeaderboard(name, score) {
 
 if (InputNameForm) {
     InputNameForm.addEventListener('submit', function () {
-        console.log(InputNameForm.firstElementChild);
         addResultToLeaderboard(InputNameForm.elements.name.value, STATE.score);
     })
 }
