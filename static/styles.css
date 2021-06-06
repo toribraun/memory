@@ -133,7 +133,21 @@ td {
     overflow: hidden;
 }
 
-.resetButton {
+.leaderBoardTable td{
+    width: 100px;
+    min-width: 80px;
+    height: 40px;
+    background-color: #44761E;
+    background-size: 120px;
+    background-position: center center;
+    background-image: none;
+    border-radius: 5px;
+    text-align: center;
+    color: #fbffa7;
+}
+
+
+.resetButton, .mainMenuButton {
     display: block;
     position: relative;
     margin: 0px auto;
@@ -146,6 +160,21 @@ td {
     width: 200px;
     padding: 10px;
     color: #fbffa7;
+}
+
+.mainMenuButton {
+    width: 400px;
+}
+
+.leaderBoard .table {
+    margin: auto;
+    border-spacing: 0;
+}
+
+.leaderBoard {
+    display: block;
+    position: relative;
+    margin: auto;
 }
 
 .resetButton:hover {

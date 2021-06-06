@@ -249,7 +249,14 @@ function addResetListener (dimensionRow, dimensionCol) {
 }
 
 
-function addResultToLeaderboard(name) {
-    localStorage.setItem(name, Math.max(SCORE, Number(localStorage.getItem(name))).toString());
+function addResultToLeaderboard(name, score) {
+    localStorage.setItem(name, Math.max(score, Number(localStorage.getItem(name))).toString());
 }
 
+const inputNameForm = document.getElementById('inputName');
+if (inputNameForm) {
+    inputNameForm.addEventListener('submit', function () {
+        console.log(inputNameForm.firstElementChild);
+        addResultToLeaderboard(inputNameForm.elements.name.value, SCORE);
+    })
+}
