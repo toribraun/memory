@@ -21,6 +21,7 @@ header {
     align-items: center;
     font-family: "Segoe Script", "Comic Sans MS", sans-serif;
     text-align: center;
+    position: relative;
 }
 
 header h1 {
@@ -28,6 +29,28 @@ header h1 {
     text-transform: uppercase;
     color: #f5fd5b;
     line-height: 100%;
+}
+
+.sound_icon img {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    width: 30px;
+    height: 30px;
+    border-radius: 20px;
+    display: none;
+}
+
+.sound_icon .on {
+    display: block;
+}
+
+.sound_icon:hover .on {
+    display: none;
+}
+
+.sound_icon:hover .on_hover {
+    display: block;
 }
 
 #gameScreen {
