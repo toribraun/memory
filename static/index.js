@@ -52,6 +52,8 @@ let lastOpenedCard = null;
 let currentTimerId;
 let scoreToDecrease = 0;
 let scoreToAdd = 0;
+let soundIsOn = checkSoundState();
+document.querySelectorAll('.sound_icon').forEach(e => e.addEventListener('click', turnSound));
 
 
 function startGame(dimensionRow, dimensionCol) {
@@ -144,7 +146,7 @@ function countScore() {
     }, 1000);
 }
 
-function showwinScreen() {
+function showWinScreen() {
     const winScreen = document.querySelector('.winText p');
     winScreen.innerHTML = `Ты нашел все пары и набрал ${SCORE} ${getNoun()}!`
     document.querySelector('.winScreen').style.display = 'block';
@@ -192,6 +194,9 @@ function isPair(card1, card2) {
 }
 
 function playAudio(audioFile) {
+    if (!soundIsOn) {
+        return;
+    }
     const audio = new Audio();
     audio.src = audioFile;
     audio.autoplay = true;
@@ -209,6 +214,22 @@ function soundClickButton() {
     playAudio('click1.mp3')
 }
 
+function turnSound() {
+    soundIsOn = !soundIsOn;
+    const state = soundIsOn ? 'on' : 'off';
+    window.localStorage.setItem('sound', state);
+    checkSoundState();
+}
+
+function checkSoundState() {
+    let state = window.localStorage.getItem('sound');
+    if (state === null) {
+        state = 'on';
+    }
+    document.querySelectorAll('.sound_icon .on').forEach(e => e.setAttribute('src', `images/sound_${state}_icon.png`));
+    document.querySelectorAll('.sound_icon .on_hover').forEach(e => e.setAttribute('src', `images/sound_${state}_icon_hover.png`));
+    return state === 'on';
+}
 
 function cardClickHandler(targetCard) {
     if (!getImageNameByCard(targetCard) || targetCard === lastOpenedCard)
@@ -225,7 +246,7 @@ function cardClickHandler(targetCard) {
             countScore();
             CardsToGuess -= 2;
             if (CardsToGuess === 0) {
-                showwinScreen();
+                showWinScreen();
             }
         } else {
             const secondCard = lastOpenedCard;
