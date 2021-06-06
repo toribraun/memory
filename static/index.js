@@ -9,6 +9,7 @@ const IMAGES = ['01.png', '02.png', '03.png', '04.png', '05.png', '06.png',
     '07.png', '08.png', '09.png', '10.png', '11.png', '12.png', '13.png',
     '14.png', '15.png', '16.png', '17.png', '18.png', '19.png', '20.png'];
 let STATE;
+let soundIsOn = checkSoundState();
 
 document.querySelectorAll('.sound_icon').forEach(e => e.addEventListener('click', turnSound));
 
@@ -22,8 +23,7 @@ function createGameState(dimensionRow, dimensionCol) {
         lastOpenedCard: null,
         currentTimerId: null,
         scoreToDecrease: 0,
-        scoreToAdd: 0,
-        soundIsOn: checkSoundState(),
+        scoreToAdd: 0
     }
 }
 
@@ -151,7 +151,7 @@ function isPair(card1, card2) {
 }
 
 function playAudio(audioFile) {
-    if (!STATE.soundIsOn) {
+    if (!soundIsOn) {
         return;
     }
     const audio = new Audio();
@@ -172,14 +172,14 @@ function soundClickCard() {
 // }
 
 function turnSound() {
-    STATE.soundIsOn = !STATE.soundIsOn;
-    const state = STATE.soundIsOn ? 'on' : 'off';
-    window.localStorage.setItem('sound', state);
+    soundIsOn = !soundIsOn;
+    const state = soundIsOn ? 'on' : 'off';
+    window.sessionStorage.setItem('sound', state);
     checkSoundState();
 }
 
 function checkSoundState() {
-    let state = window.localStorage.getItem('sound');
+    let state = window.sessionStorage.getItem('sound');
     if (state === null) {
         state = 'on';
     }
