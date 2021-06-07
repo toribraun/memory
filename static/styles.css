@@ -218,12 +218,14 @@ td {
     justify-content: center;
     position: relative;
     margin: auto;
-    max-width: 90%;
+    /*max-width: 90%;*/
 }
 
 .leaderBoard tr td:nth-child(2) {
-    max-width: calc(70vw - 100px);
+    max-width: calc(90vw - 100px);
     overflow: hidden;
+    padding-right: 10px;
+    padding-left: 10px;
 }
 
 .resetButton:hover,  .mainMenuButton:hover {
